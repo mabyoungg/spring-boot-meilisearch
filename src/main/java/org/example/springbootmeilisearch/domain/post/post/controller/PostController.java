@@ -2,7 +2,6 @@ package org.example.springbootmeilisearch.domain.post.post.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meilisearch.sdk.Client;
-import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.Index;
 import com.meilisearch.sdk.SearchRequest;
 import com.meilisearch.sdk.model.SearchResult;
@@ -23,7 +22,7 @@ import java.util.List;
 @RequestMapping("/post")
 @RequiredArgsConstructor
 public class PostController {
-    private Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+    private final Client meilisearchClient;
 
     @Data
     @AllArgsConstructor
@@ -51,7 +50,7 @@ public class PostController {
 
         String documents = objectMapper.writeValueAsString(movies);
 
-        Index index = client.index("movies");
+        Index index = meilisearchClient.index("movies");
 
         index.addDocuments(documents); // => { "taskUid": 0 }
 
@@ -61,7 +60,7 @@ public class PostController {
     @GetMapping("/search")
     @ResponseBody
     public SearchResult search(String kw) {
-        Index index = client.index("movies");
+        Index index = meilisearchClient.index("movies");
         SearchResult results = index.search(kw);
 
         return results;
@@ -70,7 +69,7 @@ public class PostController {
     @GetMapping("/customSearch")
     @ResponseBody
     public Searchable customSearch(String kw) {
-        Index index = client.index("movies");
+        Index index = meilisearchClient.index("movies");
 
         SearchResult search = (SearchResult)index.search(
                 new SearchRequest(kw)
@@ -84,7 +83,7 @@ public class PostController {
     @GetMapping("/deleteIndex")
     @ResponseBody
     public String deleteIndex(String indexName) {
-        client.deleteIndex(indexName);
+        meilisearchClient.deleteIndex(indexName);
 
         return "성공";
     }
@@ -92,7 +91,7 @@ public class PostController {
     @GetMapping("/deleteAllDocuments")
     @ResponseBody
     public String deleteAllDocuments(String indexName) {
-        Index index = client.index(indexName);
+        Index index = meilisearchClient.index(indexName);
 
         index.deleteAllDocuments();
 
