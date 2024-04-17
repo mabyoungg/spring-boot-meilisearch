@@ -88,4 +88,14 @@ public class PostController {
 
         return "성공";
     }
+
+    @GetMapping("/deleteAllDocuments")
+    @ResponseBody
+    public String deleteAllDocuments(String indexName) {
+        Index index = client.index(indexName);
+
+        index.deleteAllDocuments();
+
+        return "성공";
+    }
 }
