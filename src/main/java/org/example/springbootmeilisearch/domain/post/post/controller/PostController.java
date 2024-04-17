@@ -80,4 +80,12 @@ public class PostController {
 
         return search;
     }
+
+    @GetMapping("/deleteIndex")
+    @ResponseBody
+    public String deleteIndex(String indexName) {
+        client.deleteIndex(indexName);
+
+        return "성공";
+    }
 }
