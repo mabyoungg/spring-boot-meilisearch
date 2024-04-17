@@ -2,6 +2,7 @@ package org.example.springbootmeilisearch.global.initData;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springbootmeilisearch.domain.post.post.service.PostService;
+import org.example.springbootmeilisearch.domain.post.postdocument.service.PostDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ public class NotProd {
     @Lazy
     private NotProd self;
     private final PostService postService;
+    private final PostDocumentService postDocumentService;
 
     @Bean
     public ApplicationRunner initNotProd() {
@@ -30,6 +32,8 @@ public class NotProd {
 
     @Transactional
     public void work1() {
+        postDocumentService.clear();
+
         postService.write("subject1", "body1");
         postService.write("subject2", "body2");
         postService.write("subject3", "body3");

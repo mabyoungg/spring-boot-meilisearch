@@ -1,6 +1,7 @@
 package org.example.springbootmeilisearch.domain.post.post.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springbootmeilisearch.domain.post.post.dto.PostDto;
 import org.example.springbootmeilisearch.domain.post.post.entity.Post;
 import org.example.springbootmeilisearch.domain.post.post.event.AfterPostCreatedEvent;
 import org.example.springbootmeilisearch.domain.post.post.repository.PostRepository;
@@ -23,7 +24,7 @@ public class PostService {
                         .body(body)
                         .build());
 
-        publisher.publishEvent(new AfterPostCreatedEvent(this, post));
+        publisher.publishEvent(new AfterPostCreatedEvent(this,new PostDto(post)));
 
         return post;
     }
