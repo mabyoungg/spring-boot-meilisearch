@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meilisearch.sdk.Client;
 import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.Index;
+import com.meilisearch.sdk.model.SearchResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequestMapping("/post")
 @RequiredArgsConstructor
 public class PostController {
+    private Client client = new Client(new Config("http://localhost:7700", "masterKey"));
 
     @Data
     @AllArgsConstructor
@@ -28,6 +31,7 @@ public class PostController {
         private String[] genres;
     }
 
+    @SneakyThrows
     @GetMapping("/makeSearchData")
     @ResponseBody
     public String makeSearchData() {
@@ -43,18 +47,21 @@ public class PostController {
         movies.add(new Movie("5", "Moana", new String[]{"Fantasy", "Action"}));
         movies.add(new Movie("6", "Philadelphia", new String[]{"Drama"}));
 
-        try {
-            String documents = objectMapper.writeValueAsString(movies);
+        String documents = objectMapper.writeValueAsString(movies);
 
-            Client client = new Client(new Config("http://localhost:7700", "masterKey"));
-            Index index = client.index("movies");
+        Index index = client.index("movies");
 
-            index.addDocuments(documents); // => { "taskUid": 0 }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "실패";
-        }
+        index.addDocuments(documents); // => { "taskUid": 0 }
 
         return "성공";
+    }
+
+    @GetMapping("/search")
+    @ResponseBody
+    public SearchResult search(String kw) {
+        Index index = client.index("movies");
+        SearchResult results = index.search(kw);
+
+        return results;
     }
 }
