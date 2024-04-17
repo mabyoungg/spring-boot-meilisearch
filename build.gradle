@@ -27,6 +27,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'com.meilisearch.sdk:meilisearch-java:0.11.8'
 }
 
 tasks.named('test') {
