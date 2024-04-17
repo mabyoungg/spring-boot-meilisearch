@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meilisearch.sdk.Client;
 import com.meilisearch.sdk.Config;
 import com.meilisearch.sdk.Index;
+import com.meilisearch.sdk.SearchRequest;
 import com.meilisearch.sdk.model.SearchResult;
+import com.meilisearch.sdk.model.Searchable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +65,19 @@ public class PostController {
         SearchResult results = index.search(kw);
 
         return results;
+    }
+
+    @GetMapping("/customSearch")
+    @ResponseBody
+    public Searchable customSearch(String kw) {
+        Index index = client.index("movies");
+
+        SearchResult search = (SearchResult)index.search(
+                new SearchRequest(kw)
+                        .setShowMatchesPosition(true)
+                        .setAttributesToHighlight(new String[]{"title"})
+        );
+
+        return search;
     }
 }
