@@ -31,6 +31,16 @@ class PostServiceTest {
         assertPost(posts.get(2), 1L, "subject1", "body1");
     }
 
+    @Test
+    @DisplayName("findById")
+    void t2() {
+        Post post = postService.findById(1).get();
+
+        assertThat(post).isNotNull();
+
+        assertPost(post, 1L, "subject1", "body1");
+    }
+
     private void assertPost(Post post, Long expectedId, String expectedSubject, String expectedBody) {
         assertThat(post.getId()).isEqualTo(expectedId);
         assertThat(post.getSubject()).isEqualTo(expectedSubject);
