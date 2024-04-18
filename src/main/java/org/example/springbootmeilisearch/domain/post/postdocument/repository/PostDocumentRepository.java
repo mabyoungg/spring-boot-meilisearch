@@ -1,7 +1,8 @@
 package org.example.springbootmeilisearch.domain.post.postdocument.repository;
 
 import com.meilisearch.sdk.Index;
-import com.meilisearch.sdk.model.Results;
+import com.meilisearch.sdk.SearchRequest;
+import com.meilisearch.sdk.model.Searchable;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootmeilisearch.domain.post.postdocument.document.PostDocument;
 import org.example.springbootmeilisearch.global.app.AppConfig;
@@ -9,7 +10,6 @@ import org.example.springbootmeilisearch.global.meilisearch.MeilisearchConfig;
 import org.example.springbootmeilisearch.standard.util.Ut;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -40,13 +40,24 @@ public class PostDocumentRepository {
 
     public void clear() {
         getIndex().deleteAllDocuments();
+        getIndex().resetSortableAttributesSettings();
+        getIndex().updateSortableAttributesSettings(new String[]{"id"});
     }
 
     public List<PostDocument> findByOrderByIdDesc() {
-        Results<PostDocument> documents = getIndex()
-                .getDocuments(PostDocument.class);
+        SearchRequest searchRequest =
+                new SearchRequest("")
+                        .setSort(new String[]{"id:desc"});
 
-        return Arrays.stream(documents.getResults())
-                .toList();
+        Searchable search = getIndex().search(searchRequest);
+
+        return
+                search
+                        .getHits()
+                        .stream()
+                        .map(
+                                hit -> Ut.json.toObject(hit, PostDocument.class)
+                        )
+                        .toList();
     }
 }
