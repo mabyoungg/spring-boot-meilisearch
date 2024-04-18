@@ -1,12 +1,16 @@
 package org.example.springbootmeilisearch.domain.post.postdocument.document;
 
-import lombok.Getter;
+import lombok.*;
 import org.example.springbootmeilisearch.domain.post.post.dto.PostDto;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class PostDocument {
     @NonNull
     private long id;
