@@ -24,11 +24,11 @@ class PostServiceTest {
     void t1() {
         List<Post> posts = postService.findAll();
 
-        assertThat(posts).hasSize(3);
+        assertThat(posts).hasSize(17);
 
-        assertPost(posts.get(0), 3L, "subject3", "body3");
-        assertPost(posts.get(1), 2L, "subject2", "body2");
-        assertPost(posts.get(2), 1L, "subject1", "body1");
+        assertPost(posts.get(posts.size() - 3), 3L, "subject3", "body3");
+        assertPost(posts.get(posts.size() - 2), 2L, "subject2", "body2");
+        assertPost(posts.get(posts.size() - 1), 1L, "subject1", "body1");
     }
 
     @Test

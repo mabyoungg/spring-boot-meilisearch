@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.springbootmeilisearch.domain.post.post.dto.PostDto;
 import org.example.springbootmeilisearch.domain.post.postdocument.document.PostDocument;
 import org.example.springbootmeilisearch.domain.post.postdocument.repository.PostDocumentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +32,9 @@ public class PostDocumentService {
 
     public Optional<PostDocument> findById(long id) {
         return postDocumentRepository.findById(id);
+    }
+
+    public Page<PostDocument> findByKw(String kw, Pageable pageable) {
+        return postDocumentRepository.findByKw(kw, pageable);
     }
 }
