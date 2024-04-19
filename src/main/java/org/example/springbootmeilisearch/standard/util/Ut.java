@@ -7,6 +7,14 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class Ut {
+    public static class thread {
+        @SneakyThrows
+        public static void sleep(long millis) {
+            Thread.sleep(millis);
+        }
+    }
+
+
     public static class time {
         public static long toTimeStamp(LocalDateTime localDateTime) {
             return localDateTime.toEpochSecond(java.time.ZoneOffset.ofHours(9));

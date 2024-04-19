@@ -1,12 +1,16 @@
 package org.example.springbootmeilisearch.domain.post.post.dto;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.springbootmeilisearch.domain.post.post.entity.Post;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostDto {
     @NonNull
     private long id;

@@ -31,6 +31,12 @@ spring:
         highlight_sql: true
         use_sql_comments: true
     open-in-view: false
+  kafka:
+    bootstrap-servers: localhost:19092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
 logging:
   level:
     org.example.springbootmeilisearch: DEBUG

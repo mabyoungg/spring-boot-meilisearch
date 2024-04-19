@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springbootmeilisearch.domain.post.post.entity.Post;
 import org.example.springbootmeilisearch.domain.post.post.service.PostService;
 import org.example.springbootmeilisearch.domain.post.postdocument.service.PostDocumentService;
+import org.example.springbootmeilisearch.standard.util.Ut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -112,5 +113,7 @@ public class NotProd {
         Post post15 = postService.write("집콕 생활, 영화 추천 부탁드려요", "주말에 집에서 영화 마라톤을 하려고 해요. 최근에 본 영화 중에서 가족이나 혼자 보기 좋은 영화 추천해주세요!");
         Post post16 = postService.write("간단하게 만들 수 있는 건강 간식 추천", "간식을 좋아하는데, 건강을 생각해서라도 집에서 간단하게 만들 수 있는 건강 간식이 있을까요? 공유해주시면 감사하겠습니다!");
         Post post17 = postService.write("효율적인 집안일 관리 방법", "주말마다 집안일로 바쁜데, 좀 더 효율적으로 집안일을 관리할 수 있는 방법이 있을까요? 팁이나 노하우가 있다면 공유해주세요!");
+
+        Ut.thread.sleep(5000);
     }
 }
