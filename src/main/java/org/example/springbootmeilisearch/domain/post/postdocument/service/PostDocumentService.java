@@ -37,4 +37,10 @@ public class PostDocumentService {
     public Page<PostDocument> findByKw(String kw, Pageable pageable) {
         return postDocumentRepository.findByKw(kw, pageable);
     }
+
+    public void modify(PostDto postDto) {
+        PostDocument postDocument = new PostDocument(postDto);
+
+        postDocumentRepository.save(postDocument);
+    }
 }

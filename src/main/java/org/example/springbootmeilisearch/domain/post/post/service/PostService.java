@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springbootmeilisearch.domain.post.post.dto.PostDto;
 import org.example.springbootmeilisearch.domain.post.post.entity.Post;
 import org.example.springbootmeilisearch.domain.post.post.event.AfterPostCreatedEvent;
+import org.example.springbootmeilisearch.domain.post.post.event.AfterPostModifiedEvent;
 import org.example.springbootmeilisearch.domain.post.post.repository.PostRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,9 @@ public class PostService {
 
     public Optional<Post> findById(long id) {
         return postRepository.findById(id);
+    }
+
+    public void modified(Post post) {
+        publisher.publishEvent(new AfterPostModifiedEvent(this, new PostDto(post)));
     }
 }

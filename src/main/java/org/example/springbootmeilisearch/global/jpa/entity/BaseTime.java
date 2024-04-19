@@ -2,7 +2,6 @@ package org.example.springbootmeilisearch.global.jpa.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 @ToString(callSuper = true)
 public abstract class BaseTime extends BaseEntity {
