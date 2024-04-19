@@ -3,9 +3,16 @@ package org.example.springbootmeilisearch.standard.util;
 import lombok.SneakyThrows;
 import org.example.springbootmeilisearch.global.app.AppConfig;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class Ut {
+    public static class time {
+        public static long toTimeStamp(LocalDateTime localDateTime) {
+            return localDateTime.toEpochSecond(java.time.ZoneOffset.ofHours(9));
+        }
+    }
+
     public static class json {
         @SneakyThrows
         public static String toString(Object obj) {
