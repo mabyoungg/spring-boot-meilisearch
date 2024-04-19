@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -84,7 +85,9 @@ public class PostDocumentRepository {
                 new SearchRequest(kw)
                         .setAttributesToSearchOn(new String[]{"subject", "body"})
                         .setLimit(pageable.getPageSize())
-                        .setOffset((int) pageable.getOffset());
+                        .setOffset((int) pageable.getOffset())
+                        .setShowMatchesPosition(true)
+                        .setAttributesToHighlight(new String[]{"subject", "body"});
 
         if (startDate != null && endDate != null) {
             searchRequest
@@ -103,7 +106,10 @@ public class PostDocumentRepository {
                 .getHits()
                 .stream()
                 .map(
-                        hit -> Ut.json.toObject(hit, PostDocument.class)
+                        hit -> {
+                            Map<String, Object> formatted = (Map<String, Object>) hit.get("_formatted");
+                            return Ut.json.toObject(formatted, PostDocument.class);
+                        }
                 )
                 .toList();
 
